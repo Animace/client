@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import axios from 'axios'; // Import Axios
 
 export default function CreatePost() {
     const [title, setTitle] = useState('');
@@ -18,20 +19,21 @@ export default function CreatePost() {
         data.set('content', content);
         data.set('file', files[0]);
 
-        console.log('Form Data:', Object.fromEntries(data.entries())); // Log form data
-        const response = await fetch('http://localhost:4000/post', {
-            method: 'POST',
-            body: data,
-            credentials: 'include',
-        });
+        try {
+            const response = await axios.post('https://api-ct45.onrender.com/post', data, {
+                withCredentials: true, // Ensure credentials are included
+            });
 
-        // Log response
-        console.log('Response:', response);
+            // Log response
+            console.log('Response:', response);
 
-        if (response.ok) {
-            setRedirect(true);
-        } else {
-            console.error('Failed to create post:', response.status, response.statusText);
+            if (response.status === 200) {
+                setRedirect(true);
+            } else {
+                console.error('Failed to create post:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error creating post:', error);
         }
     }
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import axios from 'axios'; // Import Axios
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -11,18 +12,16 @@ export default function RegisterPage() {
     ev.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4000/register", {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
+      const response = await axios.post("https://api-ct45.onrender.com/register", { username, password }, {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert('Registration successful');
         setRedirect(true);
       } else {
         // If the server responds with an error, set the error message
-        const errorData = await response.json();
+        const errorData = response.data;
         setRegistrationError(errorData.message || 'Registration failed');
       }
     } catch (error) {

@@ -1,28 +1,46 @@
-import { Link } from "react-router-dom";
-import React, { useContext, useEffect } from 'react';
-import { UserContext } from './UserContext'; 
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from './UserContext';
 
 export default function Header() {
-  const { setUserInfo, userInfo } = useContext(UserContext);
+  const { setUserInfo: setUserContextInfo } = useContext(UserContext);
+  const [userInfo, setLocalUserInfo] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:4000/profile', {
+    fetch('https://api-ct45.onrender.com/profile', {
       credentials: 'include',
     })
       .then(response => {
-        response.json().then(userInfo => {
-          setUserInfo(userInfo);
-        });
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch user profile');
+        }
+      })
+      .then(data => {
+        setUserContextInfo(data);
+        setLocalUserInfo(data);
+      })
+      .catch(error => {
+        console.error('Error fetching user profile:', error);
       });
-
-  }, []);
+  }, [setUserContextInfo]);
 
   function logout() {
-    fetch('http://localhost:4000/logout', {
+    fetch('https://api-ct45.onrender.com/logout', {
       credentials: 'include',
       method: 'POST',
-    });
-    setUserInfo(null);
+    })
+      .then(response => {
+        if (response.ok) {
+          setLocalUserInfo(null);
+        } else {
+          throw new Error('Failed to logout');
+        }
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+      });
   }
 
   const username = userInfo?.username;
@@ -35,7 +53,6 @@ export default function Header() {
       <nav>
         {username ? (
           <>
-          
             <Link to="/create">Create new post</Link>
             <a onClick={logout}>Logout</a>
           </>

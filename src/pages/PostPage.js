@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { formatISO9075 } from "date-fns";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
+import axios from 'axios'; // Import Axios
 
 export default function PostPage() {
     const [postInfo, setPostInfo] = useState(null);
@@ -10,19 +11,18 @@ export default function PostPage() {
     const { id } = useParams();
 
     useEffect(() => {
-        fetch(`http://localhost:4000/post/${id}`)
-            .then(response => {
-                if (!response.ok) {
+        async function fetchPost() {
+            try {
+                const response = await axios.get(`https://api-ct45.onrender.com/post/${id}`);
+                if (response.status !== 200) {
                     throw new Error("Failed to fetch post");
                 }
-                return response.json();
-            })
-            .then(postInfo => {
-                setPostInfo(postInfo);
-            })
-            .catch(error => {
+                setPostInfo(response.data);
+            } catch (error) {
                 console.error("Error fetching post:", error);
-            });
+            }
+        }
+        fetchPost();
     }, [id]); // Include id in the dependency array
 
     if (!postInfo) return '';
@@ -43,7 +43,7 @@ export default function PostPage() {
                 </div>
             )}
             <div className="image">
-                <img src={`http://localhost:4000/${postInfo.cover}`} alt="" />
+                <img src={`https://api-ct45.onrender.com/${postInfo.cover}`} alt="" />
             </div>
             <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }} />
         </div>
