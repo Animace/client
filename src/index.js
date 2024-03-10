@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
 // Set base URL for Axios requests
-axios.defaults.baseURL = 'https://api-ct45.onrender.com';
+axios.defaults.baseURL = 'https://api-mlnb.onrender.com';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

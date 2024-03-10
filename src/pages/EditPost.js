@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import Editor from './Editor';
+import axios from 'axios';
 
 export default function EditPost(){
     const {id} = useParams();
@@ -11,23 +12,17 @@ export default function EditPost(){
     const [redirect, setRedirect] = useState(false); 
 
     useEffect(() => {
-        fetch(`http://localhost:4000/post/${id}`)
+        axios.get(`https://api-mlnb.onrender.com/post/${id}`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch post");
-                }
-                return response.json();
-            })
-            .then(postInfo => {
+                const postInfo = response.data;
                 setTitle(postInfo.title);
-                setContent(postInfo.content); // Set the content state here
+                setContent(postInfo.content);
                 setSummary(postInfo.summary);
             })
             .catch(error => {
                 console.error("Error fetching post:", error);
             });
     }, [id]);
-    
 
     async function updatePost(ev){
         ev.preventDefault();
@@ -40,16 +35,16 @@ export default function EditPost(){
             data.set('file', files?.[0]);
         }
        
-
-        const response= await fetch('http://localhost:4000/post',{
-            method:'PUT',
-            body: data,
-            credentials:'include',
-        });
-        if (response.ok){
-            setRedirect(true);
+        try {
+            const response = await axios.put(`https://api-mlnb.onrender.com/post`, data, {
+                withCredentials: true
+            });
+            if (response.status === 200){
+                setRedirect(true);
+            }
+        } catch (error) {
+            console.error("Error updating post:", error);
         }
-        
     }
 
     if (redirect) {

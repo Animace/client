@@ -11,7 +11,7 @@ export default function IndexPage() {
 
     async function fetchPosts() {
         try {
-            const response = await axios.get('https://api-ct45.onrender.com/post'); // Use Axios for GET request
+            const response = await axios.get('https://api-mlnb.onrender.com/post'); // Use Axios for GET request
             if (response.status !== 200) {
                 throw new Error('Failed to fetch posts');
             }

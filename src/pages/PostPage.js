@@ -13,7 +13,7 @@ export default function PostPage() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const response = await axios.get(`https://api-ct45.onrender.com/post/${id}`);
+                const response = await axios.get(`https://api-mlnb.onrender.com/post/${id}`);
                 if (response.status !== 200) {
                     throw new Error("Failed to fetch post");
                 }
@@ -43,7 +43,7 @@ export default function PostPage() {
                 </div>
             )}
             <div className="image">
-                <img src={`https://api-ct45.onrender.com/${postInfo.cover}`} alt="" />
+                <img src={`https://api-mlnb.onrender.com/${postInfo.cover}`} alt="" />
             </div>
             <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }} />
         </div>

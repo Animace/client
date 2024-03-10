@@ -12,7 +12,7 @@ export default function RegisterPage() {
     ev.preventDefault();
 
     try {
-      const response = await axios.post("https://api-ct45.onrender.com/register", { username, password }, {
+      const response = await axios.post("https://api-mlnb.onrender.com/register", { username, password }, {
         headers: { "Content-Type": "application/json" },
       });
 

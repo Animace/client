@@ -8,7 +8,7 @@ export default function Post({ _id, title, summary, cover, createdAt, author }) 
       <div className="image">
         <Link to={`/post/${_id}`}>
           {/* Use correct path for cover image */}
-          <img src={`https://api-ct45.onrender.com/${cover}`} alt="" />
+          <img src={`https://api-mlnb.onrender.com/${cover}`} alt="" />
         </Link>
       </div>
 

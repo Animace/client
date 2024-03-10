@@ -20,7 +20,7 @@ export default function CreatePost() {
         data.set('file', files[0]);
 
         try {
-            const response = await axios.post('https://api-ct45.onrender.com/post', data, {
+            const response = await axios.post('https://api-mlnb.onrender.com/post', data, {
                 withCredentials: true, // Ensure credentials are included
             });
 

@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     // Make GET request to fetch posts from backend
-    axios.get('https://api-ct45.onrender.com/posts')
+    axios.get('https://api-mlnb.onrender.com/posts')
       .then(response => {
         setPosts(response.data);
       })

@@ -12,7 +12,7 @@ export default function LoginPage() {
   async function login(ev) {
     ev.preventDefault();
     try {
-      const response = await axios.post('https://api-ct45.onrender.com/login', { username, password }, {
+      const response = await axios.post('https://api-mlnb.onrender.com/login', { username, password }, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true, // Ensure credentials are included
       });

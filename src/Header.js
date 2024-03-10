@@ -7,7 +7,7 @@ export default function Header() {
   const [userInfo, setLocalUserInfo] = useState(null);
 
   useEffect(() => {
-    fetch('https://api-ct45.onrender.com/profile', {
+    fetch('https://api-mlnb.onrender.com/profile', {
       credentials: 'include',
     })
       .then(response => {
@@ -27,7 +27,7 @@ export default function Header() {
   }, [setUserContextInfo]);
 
   function logout() {
-    fetch('https://api-ct45.onrender.com/logout', {
+    fetch('https://api-mlnb.onrender.com/logout', {
       credentials: 'include',
       method: 'POST',
     })
